@@ -48,6 +48,7 @@ jobs:
     - name: Deploy
       uses: 'deliverybot/helm@v1'
       with:
+        helm: 'helm3'
         release: 'hello'
         namespace: 'default'
         chart: 'hello'
