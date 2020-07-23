@@ -40,9 +40,7 @@ jobs:
         docker push ${DOCKER_USER}/${IMAGE_NAME}:${IMAGE_TAG}
   deployment:
     runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: 'k8s'
+    needs: build
     steps:
     - uses: actions/checkout@v2
     - name: Deploy
@@ -51,11 +49,11 @@ jobs:
         helm: 'helm3'
         release: 'hello'
         namespace: 'default'
-        chart: './hello'
+        chart: './k8s/hello'
         token: '${{ github.token }}'
         values: |
           appInsightsKey: ${{ secrets.AIKEY }}
         value-files: >-
-          ["./hello/values.yaml"]
+          ["./k8s/hello/values.yaml"]
       env:
         KUBECONFIG_FILE: '${{ secrets.KUBECONFIG }}'
