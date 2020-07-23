@@ -9,7 +9,7 @@ RUN ./gradlew build
 FROM mcr.microsoft.com/java/jre-headless:11u8-zulu-alpine
 
 WORKDIR /app
-COPY --from=builder /app/build/libs/hello-0.0.1-SNAPSHOT.jar ./app.jar
+COPY --from=builder /app/build/libs/hello-0.0.2-SNAPSHOT.jar ./app.jar
 
 EXPOSE 8080
 
