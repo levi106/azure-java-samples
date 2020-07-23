@@ -14,6 +14,9 @@ jobs:
   build:
     name: Build image
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: 'src/hello'
     steps:
     - uses: actions/checkout@v2
     - name: Build the Docker image
