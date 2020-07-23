@@ -38,3 +38,21 @@ jobs:
       run: |
         docker tag ${IMAGE_NAME}:${IMAGE_TAG} ${DOCKER_USER}/${IMAGE_NAME}:${IMAGE_TAG}
         docker push ${DOCKER_USER}/${IMAGE_NAME}:${IMAGE_TAG}
+  deployment:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: 'k8s'
+    steps:
+    - uses: actions/checkout@v2
+    - name: Deploy
+      uses: 'deliverybot/helm@v1'
+      with:
+        release: 'hello'
+        namespace: 'default'
+        chart: 'hello'
+        token: '${{ github.token }}'
+        values: |
+          appInsightsKey: ${{ secrets.AIKEY }}
+      env:
+        KUBECONFIG_FILE: '${{ secrets.KUBECONFIG }}'
