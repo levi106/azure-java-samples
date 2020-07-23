@@ -1,0 +1,37 @@
+name: Docker Image CI
+
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+
+env:
+  IMAGE_NAME: hello
+  IMAGE_TAG: 0.1
+
+jobs:
+  build:
+    name: Build image
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - name: Build the Docker image
+      run: docker build . --file Dockerfile --tag ${IMAGE_NAME}:${IMAGE_TAG}
+    - name: Login GitHub Registry
+      run: docker login docker.pkg.github.com -u owner -p ${{ secrets.GITHUB_TOKEN }}
+    - name: Push the Docker image to GitHub Registry
+      run: |
+        docker tag ${IMAGE_NAME} docker.pkg.github.com/${{ github.repository }}/${IMAGE_NAME}:${IMAGE_TAG}
+        docker push docker.pkg.github.com/${{ github.repository }}/${IMAGE_NAME}:${IMAGE_TAG}
+    - name: Login Docker Hub
+      env:
+        DOCKER_USER: ${{ secrets.DockerUser }}
+        DOCKER_TOKEN: ${{ secrets.DockerToken }}
+      run: echo "${DOCKER_TOKEN}" | docker login -u ${DOCKER_USER} --password-stdin 
+    - name: Push the Docker image to Docker Hub
+      env:
+        DOCKER_USER: ${{ secrets.DockerUser }}
+      run: |
+        docker tag ${IMAGE_NAME} ${DOCKER_USER}/${IMAGE_NAME}:${IMAGE_TAG}
+        docker push ${DOCKER_USER}/${IMAGE_NAME}:${IMAGE_TAG}
