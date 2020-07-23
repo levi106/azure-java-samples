@@ -6,7 +6,10 @@
 
    <!-- HTTP request component (not required for bare API) -->
    <TelemetryModules>
-      <Add type="com.microsoft.applicationinsights.web.extensibility.modules.WebRequestTrackingTelemetryModule"/>
+      <Add type="com.microsoft.applicationinsights.web.extensibility.modules.WebRequestTrackingTelemetryModule">
+        <Param name = "W3CEnabled" value = "true"/>
+        <Param name = "enableW3CBackCompat" value = "true"/>
+      </Add>
       <Add type="com.microsoft.applicationinsights.web.extensibility.modules.WebSessionTrackingTelemetryModule"/>
       <Add type="com.microsoft.applicationinsights.web.extensibility.modules.WebUserTrackingTelemetryModule"/>
    </TelemetryModules>
