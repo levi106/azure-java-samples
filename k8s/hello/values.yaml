@@ -1,0 +1,18 @@
+replicaCount: 1
+
+image:
+  repository: crystalline407/hello
+  pullPolicy: IfNotPresent
+  tag: "0.1"
+
+service:
+  type: LoadBalancer
+  port: 80
+
+resources: 
+  limits:
+    cpu: 100m
+    memory: 128Mi
+  requests:
+    cpu: 100m
+    memory: 128Mi
