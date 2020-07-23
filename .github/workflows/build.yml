@@ -25,7 +25,7 @@ jobs:
       run: docker login docker.pkg.github.com -u owner -p ${{ secrets.GITHUB_TOKEN }}
     - name: Push the Docker image to GitHub Registry
       run: |
-        docker tag ${IMAGE_NAME} docker.pkg.github.com/${{ github.repository }}/${IMAGE_NAME}:${IMAGE_TAG}
+        docker tag ${IMAGE_NAME}:${IMAGE_TAG} docker.pkg.github.com/${{ github.repository }}/${IMAGE_NAME}:${IMAGE_TAG}
         docker push docker.pkg.github.com/${{ github.repository }}/${IMAGE_NAME}:${IMAGE_TAG}
     - name: Login Docker Hub
       env:
@@ -36,5 +36,5 @@ jobs:
       env:
         DOCKER_USER: ${{ secrets.DockerUser }}
       run: |
-        docker tag ${IMAGE_NAME} ${DOCKER_USER}/${IMAGE_NAME}:${IMAGE_TAG}
+        docker tag ${IMAGE_NAME}:${IMAGE_TAG} ${DOCKER_USER}/${IMAGE_NAME}:${IMAGE_TAG}
         docker push ${DOCKER_USER}/${IMAGE_NAME}:${IMAGE_TAG}
