@@ -3,7 +3,7 @@ replicaCount: 1
 image:
   repository: crystalline407/hello
   pullPolicy: IfNotPresent
-  tag: "0.3"
+  tag: "0.4"
 
 service:
   type: LoadBalancer
