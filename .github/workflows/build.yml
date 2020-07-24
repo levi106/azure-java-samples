@@ -8,7 +8,7 @@ on:
 
 env:
   IMAGE_NAME: hello
-  IMAGE_TAG: 0.4
+  IMAGE_TAG: 0.5
 
 jobs:
   build:
